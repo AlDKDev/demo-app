@@ -8,11 +8,66 @@
   <name>demo-app</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.13.4</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
+
+  <build>
+    <plugins>
+
+
+        <!-- Plugin para compilar con Java 21 LTS -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.12.1</version>
+            <configuration>
+                <source>21</source>
+                <target>21</target>
+                <release>21</release>
+                <!-- Habilitar características modernas de Java 21 -->
+                <compilerArgs>
+                    <arg>--enable-preview</arg>
+                    <arg>-Xlint:all</arg>
+                    <arg>-Xlint:-processing</arg>
+                </compilerArgs>
+                <!-- Configuración adicional para Java 21 -->
+                <showWarnings>true</showWarnings>
+                <showDeprecation>true</showDeprecation>
+            </configuration>
+        </plugin>
+        
+        <!-- Plugin para ejecutar tests con Java 21 -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.2.5</version>
+            <configuration>
+                <!-- Configuración para JUnit 5 -->
+                <useModulePath>false</useModulePath>
+                <!-- Argumentos JVM para Java 21 -->
+                <argLine>
+                    --enable-preview
+                    -Dfile.encoding=UTF-8
+                    -Djava.locale.providers=COMPAT,SPI
+                </argLine>
+                <!-- Incluir todos los tests -->
+                <includes>
+                    <include>**/*Test.java</include>
+                    <include>**/*Tests.java</include>
+                </includes>
+            </configuration>
+        </plugin>
+
+    </plugins>
+</build>
+
+
 </project>
